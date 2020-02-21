@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
+import 'package:path/path.dart' as path;
+import 'package:path_provider/path_provider.dart' as syspaths;
 
 class ImageInput extends StatefulWidget {
-  ImageInput({Key key}) : super(key: key);
+
+  final Function onSelectedImage;
+
+  ImageInput({Key key, this.onSelectedImage}) : super(key: key);
 
   @override
   _ImageInputState createState() => _ImageInputState();
@@ -19,6 +24,16 @@ class _ImageInputState extends State<ImageInput> {
     setState(() {
       _storedImage = imageField;
     });
+    //Encontramos una ruta / path disponible para guardar info
+    final appDir = await syspaths.getApplicationDocumentsDirectory();
+    //Obtenemos el pathString de la foto tomada
+    final fileName = path.basename(imageField.path);
+    //Copiamos nuestra foto al path especificado (ruta/nombreFoto) y 
+    //guardamos el archivo
+    final savedImage = await imageField.copy("${appDir.path}/$fileName");
+    print("${appDir.path}/$fileName");
+
+    widget.onSelectedImage(savedImage);
   }
 
   @override
