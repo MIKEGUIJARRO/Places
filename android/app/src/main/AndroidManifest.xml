@@ -11,6 +11,9 @@
         android:name="io.flutter.app.FlutterApplication"
         android:label="places"
         android:icon="@mipmap/ic_launcher">
+
+        <meta-data android:name="com.google.android.geo.API_KEY"
+               android:value="AIzaSyA7QSXCaBaDwde8q5vMm3D61_frWgG47s8"/>
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
